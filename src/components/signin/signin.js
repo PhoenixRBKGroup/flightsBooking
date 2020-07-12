@@ -31,7 +31,7 @@ handleSubmit(e){
   <div>
     <form >
         <label htmlFor="email" >Email:</label>
-        <input type="email" name="email" value={this.state.name} id="email" onChange={this.handleChange.bind(this)}/><br></br>
+        <input type="email" name="email" value={this.state.email} id="email" onChange={this.handleChange.bind(this)}/><br></br>
         <label htmlFor="pass" >Password: </label>
         <input type="password" name="pass" value={this.state.pass} id="pass" onChange={this.handleChange.bind(this)}/><br></br>
         <button onSubmit={this.handleSubmit.bind(this)}>Sign In</button>
