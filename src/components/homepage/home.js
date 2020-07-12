@@ -13,18 +13,18 @@ class HomePage extends Component {
     //    return:"",
     //    oneway:"",
     //    multicity:""
-      choice:""
+      choice:'return'
     }
   }
 
 handleSubmit(e){
   e.preventDefault();
-
+ 
 }
 
 handleOptionChange(e) {
     this.setState({
-      [e.target.id]: e.target.id
+     choice: e.target.id
     });
     console.log(this.state.choice)
   }
