@@ -16,9 +16,9 @@ db.once("open", function () {
 });
 
 var userScema = mongoose.Schema({
-  Name: String,
-  Password: String,
-  Email: String,
+  name: { type: String },
+  email: { type: String, unique: true },
+  password: String,
 });
 
 let UserScema = mongoose.model("user", userScema);

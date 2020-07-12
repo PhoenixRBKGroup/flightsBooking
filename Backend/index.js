@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 var UserScema = require("./Database/db.js");
+const cors = require("cors");
 const path = require("path");
 const app = express();
+app.use(cors());
 app.use(express.json());
 var port = process.env.PORT || 3800;
 app.use(express.static(path.join(__dirname, "build")));
@@ -26,7 +28,7 @@ app.get("/api/users", function (req, res) {
 //-------------------------------------------------------
 // Add Users to DataBase
 app.post("/api/users", function (req, res) {
-  console.log(req.body);
+  console.log("server", req.body);
   var newUser = new UserScema(req.body);
   console.log(newUser);
   newUser.save(function (err, data) {
@@ -41,10 +43,10 @@ app.post("/api/users", function (req, res) {
 });
 //-------------------------------------------------------
 //search for 1 user
-app.get("/api/users/:Name", function (req, res) {
-  var search = req.params.Name;
+app.get("/api/users/:name", function (req, res) {
+  var search = req.params.name;
   console.log(search);
-  UserScema.find({ Name: search }, function (err, docs) {
+  UserScema.find({ name: search }, function (err, docs) {
     if (err) {
       console.log(err);
     }
@@ -54,8 +56,8 @@ app.get("/api/users/:Name", function (req, res) {
 });
 //---------------------------------------
 //delete user by name
-app.delete("/api/users/:Name", function (req, res) {
-  UserScema.remove({ Name: req.params.Name }, (err, result) => {
+app.delete("/api/users/:name", function (req, res) {
+  UserScema.remove({ name: req.params.name }, (err, result) => {
     if (err) {
       console.log(err);
     }
@@ -63,7 +65,23 @@ app.delete("/api/users/:Name", function (req, res) {
     res.end();
   });
 });
+//---------------------------------------------
+app.get("/signin/:email", (req, res) => {
+  
 
+  UserScema.find({ email: req.params.email })
+    .then((result) => {
+      if (!result[0].email) {
+        console.log("Wrong email");
+      }
+
+      res.status(202).send(result[0].password);
+      console.log(result[0].password);
+    })
+    .catch((err) => {
+      res.status(404).send();
+    });
+});
 app.listen(port, function () {
   console.log(`listening on port ${port}!`);
 });
