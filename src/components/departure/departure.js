@@ -1,9 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { type } from "jquery";
+import React, { useState, Component } from "react";
 import Arrival from "../arrival";
+import ReactDOM from "react-dom";
 const airports = require("airport-data");
-console.log(airports[0]);
+
 
 var airportName = [];
 airports.map((element) => {
@@ -11,17 +10,19 @@ airports.map((element) => {
   airportName.push(elements);
 });
 
-
 class Departure extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.items = airportName;
     this.state = {
       suggestions: [],
       departure: "",
+      arrival: "",
+      depDate: "",
+      value: "",
     };
   }
-  
+
   onTextChanged = (e) => {
     const value = e.target.value;
     let suggestions = [];
@@ -37,7 +38,9 @@ class Departure extends React.Component {
       suggestions: [],
     }));
   }
-
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   renderSuggestions() {
     const { suggestions } = this.state;
     if (suggestions.length === 0) {
@@ -61,13 +64,27 @@ class Departure extends React.Component {
           value={this.state.departure}
           onChange={this.onTextChanged}
           type="text"
+          name="departure"
         />
         {this.renderSuggestions()}
-        <Arrival>{this.props.departure}</Arrival>
+        <input
+          type="date"
+          name="depDate"
+          value={this.state.depDate}
+          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChanges}
+        ></input>
+        <Arrival data={this.state} />
+        <button
+          onClick={() => {
+            console.log(this.state.suggestions);
+          }}
+        >
+          deportt
+        </button>
       </div>
     );
   }
 }
 
 export default Departure;
-

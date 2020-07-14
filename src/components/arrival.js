@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { type } from "jquery";
 const airports = require("airport-data");
+
 
 var airportName = [];
 airports.map((element) => {
@@ -9,14 +9,17 @@ airports.map((element) => {
 });
 
 class Arrival extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    console.log("Props in Input :", props);
+    super(props);
     this.items = airportName;
     this.state = {
       suggestions: [],
+      departure: this.props.data.departure,
       arrival: "",
     };
   }
+
   onTextChanged = (e) => {
     const value = e.target.value;
     let suggestions = [];
@@ -31,7 +34,6 @@ class Arrival extends React.Component {
       text: value,
       suggestions: [],
     }));
-   
   }
 
   renderSuggestions() {
@@ -49,15 +51,26 @@ class Arrival extends React.Component {
       </ul>
     );
   }
+
   render() {
     return (
       <div>
+        <h1></h1>
         <input
           value={this.state.arrival}
           onChange={this.onTextChanged}
           type="text"
+          value={this.state.value}
+          onChangeValue={this.handleChangeValue}
         />
         {this.renderSuggestions()}
+        <button
+          onClick={() => {
+            console.log(this.departure);
+          }}
+        >
+          ssss
+        </button>
       </div>
     );
   }
