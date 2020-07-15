@@ -2,22 +2,34 @@
   "name": "flybooking",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "proxy": "http://localhost:3800/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+<<<<<<< HEAD
+    "airport-data": "^1.0.1",
+    "amadeus": "^5.1.0",
+    "axios": "^0.19.2",
+    "jquery": "^3.5.1",
+    "mdbreact": "^4.27.0",
+=======
     "axios": "^0.19.2",
     "express": "^4.17.1",
+>>>>>>> origin/master
     "react": "^16.13.1",
+    "react-autosuggest": "^10.0.2",
+    "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && Backend/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  
   },
   "eslintConfig": {
     "extends": "react-app"
