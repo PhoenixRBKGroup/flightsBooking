@@ -1,9 +1,12 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-mongoose.connect("mongodb://localhost/FlyBookingDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://user_shortLink:A123A123@cluster0-51n2q.mongodb.net/flybooking",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 var db = mongoose.connection;
 

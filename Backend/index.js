@@ -67,8 +67,6 @@ app.delete("/api/users/:name", function (req, res) {
 });
 //---------------------------------------------
 app.get("/signin/:email", (req, res) => {
-  
-
   UserScema.find({ email: req.params.email })
     .then((result) => {
       if (!result[0].email) {

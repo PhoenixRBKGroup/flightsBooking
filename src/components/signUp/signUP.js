@@ -1,6 +1,6 @@
 import React from "react";
-//import logo from "./logo.svg";
-//import "./App.css";
+import Navbar from "../NavBar/NavBar.js";
+import "./style.css";
 const axios = require("axios");
 
 //chang the name of componet to singUP
@@ -59,42 +59,48 @@ class SingUP extends React.Component {
     const { name, password, email } = this.state;
     const values = { name, password, email };
     return (
-      <div classname="signIn">
-        <form>
-          <h1> sign up </h1>
-          <label classname="label">User Name</label>
+      <div>
+        <Navbar />
+        <form id="signup">
+          <h1 className="header"> sign up </h1>
+          <label id="label">User Name</label>
           <input
+            className="user_input"
             type="text"
-            placeholder="Enter the user name "
+            placeholder="Enter You UserName "
             defaultValue={values.name}
             id="name"
-            classname="input1"
             onChange={this.handleChange}
           ></input>
           <br />
           <br />
-          <label classname="label">Email</label>
+          <label id="label">Email</label>
           <input
-            type="text"
-            placeholder="Enter your email "
+            className="email_input"
+            type="email"
+            placeholder="Enter Your email "
             defaultValue={values.email}
             id="email"
-            classname="input1"
             onChange={this.handleChange}
           ></input>
           <br />
           <br />
-          <label classname="label"> Password</label>
+          <label id="label"> Password</label>
           <input
+            className="password_input"
             type="password"
-            placeholder="Enter the password "
+            placeholder="Enter Your Password "
             defaultValue={values.password}
             id="password"
-            classname="input1"
             onChange={this.handleChange}
           ></input>
           <br />
-          <button onClick={this.handleSubmit.bind(this)}>sign up</button>
+          <button
+            className="sigup_button"
+            onClick={this.handleSubmit.bind(this)}
+          >
+            signUp
+          </button>
         </form>
       </div>
     );

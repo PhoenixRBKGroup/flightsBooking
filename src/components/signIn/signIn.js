@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import logo from './logo.svg';
-// import './App.css';
+import Navbar from "../NavBar/NavBar.js";
+import "./style.css";
 const axios = require("axios");
 
 class Signin extends Component {
@@ -19,6 +19,7 @@ class Signin extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    
     axios
       .get(`http://127.0.0.1:3800/signin/${this.state.email}`)
       .then((result) => {
@@ -38,27 +39,38 @@ class Signin extends Component {
   }
   render() {
     return (
-      <div>
-        <form>
-          <label htmlFor="email">email:</label>
+      <form className="login_form">
+        <Navbar />
+        <div className="login">
+          <h1 className="header">Login</h1>
+          <label className="email_lab">Email</label>
           <input
+            className="email_input"
             type="email"
             name="email"
             value={this.state.email}
+            placeholder="Please Enter your email"
             onChange={this.handleChange.bind(this)}
           />
           <br />
-          <label htmlFor="pass">password: </label>
+          <label className="Password_lab">Password</label>
           <input
+            className="password_input"
             type="password"
             name="password"
             value={this.state.password}
+            placeholder="Please Enter your Password"
             onChange={this.handleChange.bind(this)}
           />
           <br />
-          <button onClick={this.handleSubmit.bind(this)}>Sign In</button>
-        </form>
-      </div>
+          <button
+            className="button_signin"
+            onClick={this.handleSubmit.bind(this)}
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     );
   }
 }
