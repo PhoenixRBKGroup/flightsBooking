@@ -1,53 +1,77 @@
-import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-const axios = require('axios');
+import React, { Component } from "react";
+import Navbar from "../NavBar/NavBar.js";
+import "./style.css";
+const axios = require("axios");
 
 class Signin extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      email:"",
-      pass:""
-    }
+    this.state = {
+      email: "",
+      password: "",
+    };
   }
-  handleChange(e){
+  handleChange(e) {
     this.setState({
-        [e.target.name]:e.target.value
-    })
-}
+      [e.target.name]: e.target.value,
+    });
+  }
 
-handleSubmit(e){
-  e.preventDefault();
-  axios.get('/signin',{email:this.state.email,pass:this.state.pass}).then((result)=>{
-    console.log(result)
-  }).catch((err)=>{
-    console.log("err signing in!"+err);
-  })
-  alert('you have been sucessfully signed up!');
-}
-  render(){
-  return (
-  <div>
-    <form >
-        <label htmlFor="email" >Email:</label>
-        <input type="email" name="email" value={this.state.name} id="email" onChange={this.handleChange.bind(this)}/><br></br>
-        <label htmlFor="pass" >Password: </label>
-        <input type="password" name="pass" value={this.state.pass} id="pass" onChange={this.handleChange.bind(this)}/><br></br>
-        <button onSubmit={this.handleSubmit.bind(this)}>Sign In</button>
-    </form>
-    </div>
-  )
+  handleSubmit(e) {
+    e.preventDefault();
+    axios
+      .get(`http://127.0.0.1:3800/signin/${this.state.email}`)
+      .then((result) => {
+        console.log("password ", result.data);
+
+        if (result.data == this.state.password) {
+          console.log("welcome");
+          alert("you have been sucessfully signed up!");
+        } else {
+          console.log("wrong password");
+          alert("wrong password");
+        }
+      })
+      .catch((err) => {
+        console.log("err signing in!" + err);
+      });
+  }
+  render() {
+    return (
+      <div>
+        <Navbar />
+        <form className="login">
+          <h1 className="header">LogIn</h1>
+          <label className="email_lab">Email</label>
+          <input
+            className="email_input"
+            type="email"
+            name="email"
+            placeholder="Please Enter Your Email"
+            value={this.state.email}
+            onChange={this.handleChange.bind(this)}
+          />
+          <br />
+          <label className="Password_lab">Password </label>
+          <input
+            className="password_input"
+            type="password"
+            name="password"
+            placeholder="Please Enter Your Password"
+            value={this.state.password}
+            onChange={this.handleChange.bind(this)}
+          />
+          <br />
+          <button
+            className="button_signin"
+            onClick={this.handleSubmit.bind(this)}
+          >
+            Sign In
+          </button>
+        </form>
+      </div>
+    );
   }
 }
 
 export default Signin;
-
-// app.get('/signin',(req,res)=>{
-//   const {email,pass} = req.body;
-//   userModel.find({email:email,pass:pass}).then((result)=>{
-//   res.status(202).send(result+"sucess");
-//   }).catch((err)=>{
-//    res.status(404).send(err);
-//   })
-// })
