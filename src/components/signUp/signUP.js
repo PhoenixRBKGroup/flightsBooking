@@ -1,7 +1,17 @@
 import React from "react";
+import { Button } from "react-bootstrap";
+
 import Navbar from "../NavBar/NavBar.js";
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import "./style.css";
 const axios = require("axios");
+
+// initializing firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyCKD1Uydm10LcXglQPGFWYqDDEuy1hAnu8",
+  authDomain: "reactlogin-c308d.firebaseapp.com",
+});
 
 //chang the name of componet to singUP
 class SingUP extends React.Component {
@@ -12,9 +22,34 @@ class SingUP extends React.Component {
       name: "",
       password: "",
       email: "",
+      step: 0,
       isExist: true,
+      isSignedIn: false
     };
   }
+  uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      // firebase.auth.TwitterAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccess: () => false,
+    },
+  };
+  //Load data from a remote endpoint
+  componentDidMount = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ isSignedIn: !!user });
+      console.log("user", user);
+    });
+  };
+
+  nextStep = () => {
+    const { step } = this.state;
+    this.setState({ step: step + 1 });
+  };
 
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
@@ -53,11 +88,12 @@ class SingUP extends React.Component {
     // } else {
     //   alert("The email is aready used");
     // }
+    window.location.href='/'
   };
 
   render() {
-    const { name, password, email } = this.state;
-    const values = { name, password, email };
+    const { name, password, email, step } = this.state;
+    const values = { name, password, email, step };
     return (
       <div>
         <Navbar />
@@ -65,7 +101,7 @@ class SingUP extends React.Component {
           <h1 className="header"> sign up </h1>
           <label id="label">User Name</label>
           <input
-            className="user_input"
+            className="user_input input" 
             type="text"
             placeholder="Enter You UserName "
             defaultValue={values.name}
@@ -76,7 +112,7 @@ class SingUP extends React.Component {
           <br />
           <label id="label">Email</label>
           <input
-            className="email_input"
+            className="email_input input"
             type="email"
             placeholder="Enter Your email "
             defaultValue={values.email}
@@ -87,7 +123,7 @@ class SingUP extends React.Component {
           <br />
           <label id="label"> Password</label>
           <input
-            className="password_input"
+            className="password_input input"
             type="password"
             placeholder="Enter Your Password "
             defaultValue={values.password}
@@ -96,12 +132,52 @@ class SingUP extends React.Component {
           ></input>
           <br />
           <button
-            className="sigup_button"
-            onClick={this.handleSubmit.bind(this)}
+            className="sigup_button input"
+            onClick={this.handleSubmit.bind(this) }
           >
             signUp
           </button>
         </form>
+        <div>
+          {this.state.isSignedIn ? (
+            <span>
+              <div>
+                Signed in succssufully
+                <h3>Welcome {firebase.auth().currentUser.displayName}</h3>{" "}
+                <br></br>
+                <form>
+                  <Button
+                    variant="btn btn-success"
+                    className="btn1 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href='/';
+                      }}
+                  >
+                    {" "}
+                    Next
+                  </Button>
+                  <Button
+                    variant="btn btn-success"
+                    className="btn2"
+                    onClick={() => firebase.auth().signOut()}
+                  >
+                    Logout
+                  </Button>
+                </form>
+                {/* <img
+                  alt="profile picture"
+                  src={firebase.auth().currentUser.photoURL}
+                /> */}
+              </div>
+            </span>
+          ) : (
+            <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          )}
+        </div>
       </div>
     );
   }

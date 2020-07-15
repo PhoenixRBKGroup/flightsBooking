@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../NavBar/NavBar.js";
 import "./style.css";
-import firebase from "firebase";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 const axios = require("axios");
-
-// initializing firebase
-firebase.initializeApp({
-  apiKey: "AIzaSyCKD1Uydm10LcXglQPGFWYqDDEuy1hAnu8",
-  authDomain: "reactlogin-c308d.firebaseapp.com",
-});
 
 class Signin extends Component {
   constructor(props) {
@@ -24,6 +16,7 @@ class Signin extends Component {
       [e.target.name]: e.target.value,
     });
   }
+ 
 
   handleSubmit(e) {
     e.preventDefault();
@@ -43,6 +36,7 @@ class Signin extends Component {
       .catch((err) => {
         console.log("err signing in!" + err);
       });
+      window.location.href = "/";
   }
   render() {
     return (
@@ -52,7 +46,7 @@ class Signin extends Component {
           <h1 className="header">LogIn</h1>
           <label className="email_lab">Email</label>
           <input
-            className="email_input"
+            className="email_input input"
             type="email"
             name="email"
             placeholder="Please Enter Your Email"
@@ -62,7 +56,7 @@ class Signin extends Component {
           <br />
           <label className="Password_lab">Password </label>
           <input
-            className="password_input"
+            className="password_input input"
             type="password"
             name="password"
             placeholder="Please Enter Your Password"

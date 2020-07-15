@@ -54,7 +54,11 @@ class HomePage extends React.Component {
     return (
       <ul>
         {suggestions.slice(0, 5).map((item, i) => (
-          <li key={i} onClick={() => this.suggestionSelected(item)}>
+          <li
+            className="item-list"
+            key={i}
+            onClick={() => this.suggestionSelected(item)}
+          >
             {item}
           </li>
         ))}
@@ -86,7 +90,11 @@ class HomePage extends React.Component {
     return (
       <ul className="list">
         {suggestions2.slice(0, 5).map((item, i) => (
-          <li className= "item-list" key={i} onClick={() => this.suggestionSelected2(item)}>
+          <li
+            className="item-list"
+            key={i}
+            onClick={() => this.suggestionSelected2(item)}
+          >
             {item}
           </li>
         ))}
@@ -113,7 +121,9 @@ class HomePage extends React.Component {
       },
     })
       .then((response) => {
-        this.state.dataTicket.push(response.data);
+        this.setState({
+          dataTicket: response.data.Quotes,
+        });
         console.log(this.state.dataTicket);
       })
       .catch((error) => {
@@ -123,13 +133,41 @@ class HomePage extends React.Component {
   //--------------------------------------------------------
 
   render() {
+    const data = this.state.dataTicket;
+    const table1 = data.map((item) => (
+      <div>
+        <form>
+          <table id="info">
+            <tbody>
+              <tr>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.QuoteId}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.Direct.toString()}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.MinPrice}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.OutboundLeg.DepartureDate}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.QuoteDateTime}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    ));
     return (
       <div>
         <Navbar />
         <div className="main">
           <label>From</label>
           <input
-            className="from"
+            className="from input1"
             value={this.state.departure}
             onChange={this.onTextChanged}
             type="text"
@@ -137,16 +175,18 @@ class HomePage extends React.Component {
           />
           {this.renderSuggestions()}
           <label>Depart</label>
+
           <input
-            className="depart"
+            className="depart input1"
             type="date"
             value={this.state.depDate}
             onChange={this.handleChange}
             name="depDate"
           />
+          <br></br>
           <label>To</label>
           <input
-            className="to"
+            className="to input1"
             value={this.state.arrival}
             onChange={this.onTextChanged2}
             type="text"
@@ -155,14 +195,39 @@ class HomePage extends React.Component {
           {this.renderSuggestions2()}
           <label>Return</label>
           <input
-            className="return"
+            className="return input1"
             type="date"
             value={this.state.arrDate}
             onChange={this.handleChange}
             name="arrDate"
           />
           <br />
-          <button onClick={() => this.submit()}>Check</button>
+          <button className="check_button" onClick={() => this.submit()}>
+            Check
+          </button>
+          <br></br>
+          <br></br>
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <td style={{ width: "50px", padding: "20px" }}>ID </td>
+                  <td style={{ width: "50px", padding: "20px" }}>Direct </td>
+                  <td style={{ width: "100px", padding: "20px" }}>
+                    MinPrice '$'
+                  </td>
+                  <td style={{ width: "50px", padding: "20px" }}>
+                    Departure Date{" "}
+                  </td>
+                  <td style={{ width: "50px", padding: "20px" }}>
+                    Quote Date Time{" "}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br></br>
+            {table1}
+          </div>
         </div>
       </div>
     );

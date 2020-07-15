@@ -1,9 +1,9 @@
 .navbar {
   display: flex;
   align-items: center;
-  background: orange;
+  background: rgb(12, 2, 68);
   color: white;
-  font-family: Helvetica;
+  font-family: 'Bungee Inline', cursive;
   font-weight: 300;
 }
 
@@ -23,5 +23,9 @@
 }
 .navbar_item a:hover {
   font-size: 23px;
-  color: aqua;
+}
+
+fontface {
+  font-family: 'Bungee Inline', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Bungee+Inline')
 }
