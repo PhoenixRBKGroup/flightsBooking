@@ -1,16 +1,17 @@
-import React from "react";
-import Navbar from "../NavBar/NavBar.js";
+import React, { useState, Component } from "react";
+import ReactDOM from "react-dom";
 import "./style.css";
 const airports = require("airport-data");
 const axios = require("axios");
+// import Table from 'react-bootstrap/Table'
 
 var airportName = [];
 airports.map((element) => {
   var elements = [element.city, element.name, element.iata].join(" ");
-  return airportName.push(elements);
+  airportName.push(elements);
 });
 
-class HomePage extends React.Component {
+class Departure extends React.Component {
   constructor(props) {
     super(props);
     this.items = airportName;
@@ -84,9 +85,9 @@ class HomePage extends React.Component {
       return null;
     }
     return (
-      <ul className="list">
+      <ul>
         {suggestions2.slice(0, 5).map((item, i) => (
-          <li className= "item-list" key={i} onClick={() => this.suggestionSelected2(item)}>
+          <li key={i} onClick={() => this.suggestionSelected2(item)}>
             {item}
           </li>
         ))}
@@ -113,8 +114,13 @@ class HomePage extends React.Component {
       },
     })
       .then((response) => {
-        this.state.dataTicket.push(response.data);
-        console.log(this.state.dataTicket);
+        // this.state.dataTicket.push(response.data);
+        // const arr = this.state.dataTicket;
+        console.log("dddd", response.data);
+        this.setState({
+          dataTicket: response.data.Quotes,
+        });
+        // console.log("++", this.state.dataTicket);
       })
       .catch((error) => {
         console.log(error);
@@ -123,50 +129,96 @@ class HomePage extends React.Component {
   //--------------------------------------------------------
 
   render() {
-    return (
+    const data = this.state.dataTicket;
+    const table1 = data.map((item) => (
       <div>
-        <Navbar />
-        <div className="main">
-          <label>From</label>
+        <form>
+          <table id="info">
+            <tbody>
+              <tr>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.QuoteId}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.Direct.toString()}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.MinPrice}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.OutboundLeg.DepartureDate}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  {item.QuoteDateTime}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    ));
+    // console.log( '++',data);
+    return (
+      <div className="main">
+        <div>
           <input
-            className="from"
+            className="input"
             value={this.state.departure}
             onChange={this.onTextChanged}
             type="text"
             name="departure"
           />
           {this.renderSuggestions()}
-          <label>Depart</label>
           <input
-            className="depart"
+            className="input"
             type="date"
             value={this.state.depDate}
             onChange={this.handleChange}
             name="depDate"
           />
-          <label>To</label>
-          <input
-            className="to"
-            value={this.state.arrival}
-            onChange={this.onTextChanged2}
-            type="text"
-            name="arrival"
-          />
-          {this.renderSuggestions2()}
-          <label>Return</label>
-          <input
-            className="return"
-            type="date"
-            value={this.state.arrDate}
-            onChange={this.handleChange}
-            name="arrDate"
-          />
-          <br />
-          <button onClick={() => this.submit()}>Check</button>
+        </div>
+        <input
+          className="input"
+          value={this.state.arrival}
+          onChange={this.onTextChanged2}
+          type="text"
+          name="arrival"
+        />
+        {this.renderSuggestions2()}
+        <input
+          className="input"
+          type="date"
+          value={this.state.arrDate}
+          onChange={this.handleChange}
+          name="arrDate"
+        />
+        <button onClick={() => this.submit()}>Check</button>
+        <br></br>
+        <br></br>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <td style={{ width: "50px", padding: "20px" }}>ID </td>
+                <td style={{ width: "50px", padding: "20px" }}>Direct </td>
+                <td style={{ width: "100px", padding: "20px" }}>
+                  MinPrice '$'
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  Departure Date{" "}
+                </td>
+                <td style={{ width: "50px", padding: "20px" }}>
+                  Quote Date Time{" "}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br></br>
+          {table1}
         </div>
       </div>
     );
   }
 }
 
-export default HomePage;
+export default Departure;

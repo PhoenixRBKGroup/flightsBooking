@@ -1143,3 +1143,31 @@ var ticket = {
     },
   ],
 };
+
+// [Agents,dep time , arr time , price]
+console.log(ticket.Legs[0].Id);
+var id = ticket.Itineraries[0].OutboundLegId;
+
+function price() {
+  var price = [];
+  for (var i = 0; i < ticket.Itineraries.length; i++) {
+    for (var key in ticket.Itineraries[i].PricingOptions) {
+      var obj = {
+        id: ticket.Itineraries[i].OutboundLegId,
+        cost: ticket.Itineraries[i].PricingOptions[0].Price,
+        agents: ticket.Itineraries[i].PricingOptions[0].Agents[0],
+      };
+      price.push(obj);
+    }
+  }
+  for (var j = 0; j < ticket.Agents.length; j++) {
+    for (var i = 0; i < price.length; i++) {
+      if (price[i].Agents == ticket.Agents[i].Id[0]) {
+        price[i].Agents = ticket.Agents[j];
+      }
+    }
+  }
+  return price;
+}
+
+price();

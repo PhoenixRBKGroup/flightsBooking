@@ -16,10 +16,7 @@ body {
   background: white;
   border-radius: 3px;
 }
-.from,
-.to,
-.depart,
-.return {
+.input {
   margin: 5px;
   padding: 0 10px;
   width: 140px;
@@ -33,17 +30,4 @@ body {
   -moz-outline-radius: 3px;
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
-}
-.depart,
-.return {
-  font-size: 17px;
-  color: #d5215d;
-}
-.list {
-  list-style: none;
-  border: 1px solid;
-  font-weight: bold;
-}
-.item-list ::before {
-  border: 1px solid;
 }
