@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import Navbar from "../NavBar/NavBar.js";
 import "./style.css";
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 const axios = require("axios");
+
+// initializing firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyCKD1Uydm10LcXglQPGFWYqDDEuy1hAnu8",
+  authDomain: "reactlogin-c308d.firebaseapp.com",
+});
 
 class Signin extends Component {
   constructor(props) {

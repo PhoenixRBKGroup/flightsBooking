@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 //import logo from "./logo.svg";
 import "./App.css";
 import HomePage from "./components/HomePage/HomePage.js";
-import Signin from "./components/signIn/signin.js";
+import Signin from "./components/signin/signin.js";
 import Signup from "./components/signUp/signUP.js";
 
 // import AppComponent from "./test/saerchFlight.jsx";
