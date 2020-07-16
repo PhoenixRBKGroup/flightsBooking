@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  background: rgb(12, 2, 68);
+  color: white;
+  font-family: 'Bungee Inline', cursive;
+  font-weight: 300;
+}
+
+.logo {
+  margin-right: auto;
+  font-size: 150%;
+  padding: 12px 16px;
+}
+
+.navbar_item a {
+  padding: 16px 16px;
+  cursor: pointer;
+  vertical-align: middle;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+.navbar_item a:hover {
+  font-size: 23px;
+}
+
+fontface {
+  font-family: 'Bungee Inline', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Bungee+Inline')
+}

@@ -1,0 +1,56 @@
+body {
+  background-image: url("https://usatsneakhype.files.wordpress.com/2016/02/news_pict_20150602180550000000.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 60%;
+  font-family: "Numans", sans-serif;
+  top: 40%;
+  left: 40%;
+}
+
+.login{
+  text-align: center;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  margin-top: 70px;
+  background-color: rgba(39, 47, 97, 0.65);
+  margin-left:300px;
+  margin-right: 300px;
+  padding-bottom: 30px;
+  border-radius: 30px;
+  color:white
+}
+
+.input{
+  outline: none;
+  border-radius:20px;
+  margin-left:20px;
+  margin-bottom: 20px;
+  width:200px;
+  height: 30px;
+  border:0;
+  padding-left: 20px;
+}
+
+label{
+  font-size: 1.4em;
+  
+}
+
+.button_signin{
+  border-radius: 20px;
+  border:0;
+  width:100px;
+  height: 50px;
+  font-size: 1.1em;
+  outline:none;
+  margin-top: 10px;
+  color:white;
+  font-weight: bold;
+  background-color: rgb(12, 2, 68);
+}
+
+.button_signin:hover{
+  background-color:#f2e6ff;
+  color: rgb(12, 2, 68);
+}

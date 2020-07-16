@@ -1,0 +1,63 @@
+#signup{
+  text-align: center;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  margin-top: 70px;
+  background-color: rgba(39, 47, 97, 0.65);
+  margin-left:300px;
+  margin-right: 300px;
+  padding-bottom: 30px;
+  border-radius: 30px;
+  color:white
+}
+
+fontface {
+  font-family: 'Bungee Inline', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Bungee+Inline')
+}
+
+.input{
+  border-radius:20px;
+  margin-left:20px;
+  margin-bottom: 20px;
+  width:200px;
+  height: 30px;
+  border:0;
+  padding-left: 20px;
+}
+
+label{
+  font-size: 1.4em;
+  
+}
+
+.sigup_button{
+  border-radius: 20px;
+  border:0;
+  width:100px;
+  height: 50px;
+  font-size: 1.1em;
+  outline:none;
+  margin-top: 30px;
+  color:white;
+  background-color: rgb(12, 2, 68);
+  font-weight: bold;
+
+}
+.sigup_button:hover{
+  background-color:#f2e6ff;
+  color: rgb(12, 2, 68);
+}
+.email_input{
+  margin-left:80px;
+}
+
+.password_input{
+  margin-left:40px;
+}
+
+h1{
+  font-size: 3em;
+}
+
+
