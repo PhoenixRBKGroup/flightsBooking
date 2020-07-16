@@ -5,8 +5,11 @@ const airports = require("airport-data");
 const axios = require("axios");
 
 var airportName = [];
+var airportcode = [];
 airports.map((element) => {
   var elements = [element.city, element.name, element.iata].join(" ");
+  var elm = { name: element.name, code: element.iata };
+  airportcode.push(elm);
   return airportName.push(elements);
 });
 
@@ -22,6 +25,8 @@ class HomePage extends React.Component {
       depDate: "",
       arrDate: "",
       dataTicket: [],
+      trip: "",
+      dataRn: [],
     };
   }
 
@@ -39,9 +44,6 @@ class HomePage extends React.Component {
       departure: value,
       suggestions: [],
     }));
-    var code = value.slice(value.length - 3);
-    this.setState({ depCode: code });
-    console.log(this.state);
   }
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -108,59 +110,110 @@ class HomePage extends React.Component {
     console.log(this.state.depDate);
     axios({
       method: "GET",
-      url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${depcode}/${arrcode}/${this.state.depDate}`,
+      url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/${depcode}/${arrcode}/${this.state.depDate}?inboundpartialdate=${this.state.arrDate}`,
       headers: {
-        "content-type": "application/octet-stream",
+        // "content-type": "application/octet-stream",
         "x-rapidapi-host":
           "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
         "x-rapidapi-key": "c8d544a811mshc700b88f27c3a80p18b95bjsnd6e8e3db1374",
-        useQueryString: true,
-      },
-      params: {
-        inboundpartialdate: this.state.arrDate,
+        // useQueryString: true,
       },
     })
       .then((response) => {
         this.setState({
-          dataTicket: response.data.Quotes,
+          dataTicket: response.data,
         });
-        console.log(this.state.dataTicket);
+      })
+      .then(() => {
+        var data = [];
+        for (var i = 0; i < this.state.dataTicket.Quotes.length; i++) {
+          data.push({
+            cost: this.state.dataTicket.Quotes[i].MinPrice,
+            Carrier: this.state.dataTicket.Quotes[i].OutboundLeg.CarrierIds[0],
+            DepartureDate: this.state.dataTicket.Quotes[i].QuoteDateTime,
+          });
+        }
+        for (var k = 0; k < data.length; k++) {
+          for (var j = 0; j < this.state.dataTicket.Carriers.length; j++) {
+            if (
+              this.state.dataTicket.Carriers[j].CarrierId === data[k].Carrier
+            ) {
+              console.log(data[k].Carrier);
+              data[k].Carrier = this.state.dataTicket.Carriers[j].Name;
+            }
+          }
+        }
+
+        for (var l = 0; l < data.length; l++) {
+          data[l].DepartureDate = data[l].DepartureDate.split("T");
+        }
+        this.setState({ dataRn: data });
+
+        console.log(this.state.dataRn);
+
+        // console.log(this.state.dataTicket);
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          trip: "There are no flights available on this date",
+        });
       });
+    if (this.state.dataRn.length === 0) {
+      this.setState({
+        trip: "There are no flights available on this date",
+      });
+    } else {
+      this.setState({
+        trip: "",
+      });
+    }
   };
   //--------------------------------------------------------
 
   render() {
-    const data = this.state.dataTicket;
-    var k = 0
+    const data = this.state.dataRn;
+
     const table1 = data.map((item, i) => (
-      <div>
-        <form>
-          <table id="info">
-            <tbody  >
-              <tr  >
-                <td  style={{ width: "50px", padding: "20px" }}>
-                  {item.QuoteId}
-                </td>
-                <td  style={{ width: "50px", padding: "20px" }}>
-                  {item.Direct.toString()}
-                </td>
-                <td    style={{ width: "50px", padding: "20px" }}>
-                  {item.MinPrice}
-                </td>
-                <td    style={{ width: "50px", padding: "20px" }}>
-                  {item.OutboundLeg.DepartureDate}
-                </td>
-                <td   style={{ width: "50px", padding: "20px" }}>
-                  {item.QuoteDateTime}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
+      <form>
+        <div className="container">
+          <lab className="Carrier">{item.Carrier}</lab>
+          <span className="date">
+            <label className="date">{item.DepartureDate[0]}</label>
+            <br />
+            <label className="hours">{item.DepartureDate[1]}</label>
+          </span>
+          <span id="price">
+            <label id="price"> price </label>
+            <h1 className="pricem">{item.cost}</h1>
+          </span>
+        </div>
+      </form>
+      // <div>
+      //   <form>
+      //     <table id="info">
+      //       <tbody  >
+      //         <tr  >
+      //           <td  style={{ width: "50px", padding: "20px" }}>
+      //             {item.QuoteId}
+      //           </td>
+      //           <td  style={{ width: "50px", padding: "20px" }}>
+      //             {item.Direct.toString()}
+      //           </td>
+      //           <td    style={{ width: "50px", padding: "20px" }}>
+      //             {item.MinPrice}
+      //           </td>
+      //           <td    style={{ width: "50px", padding: "20px" }}>
+      //             {item.OutboundLeg.DepartureDate}
+      //           </td>
+      //           <td   style={{ width: "50px", padding: "20px" }}>
+      //             {item.QuoteDateTime}
+      //           </td>
+      //         </tr>
+      //       </tbody>
+      //     </table>
+      //   </form>
+      // </div>
     ));
     return (
       <div>
@@ -207,28 +260,9 @@ class HomePage extends React.Component {
             Check
           </button>
           <br></br>
+          {this.state.trip}
           <br></br>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <td style={{ width: "50px", padding: "20px" }}>ID </td>
-                  <td style={{ width: "50px", padding: "20px" }}>Direct </td>
-                  <td style={{ width: "100px", padding: "20px" }}>
-                    MinPrice '$'
-                  </td>
-                  <td style={{ width: "50px", padding: "20px" }}>
-                    Departure Date{" "}
-                  </td>
-                  <td style={{ width: "50px", padding: "20px" }}>
-                    Quote Date Time{" "}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <br></br>
-            {table1}
-          </div>
+          {table1}
         </div>
       </div>
     );
