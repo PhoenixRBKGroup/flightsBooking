@@ -66,17 +66,14 @@ app.delete("/api/users/:name", function (req, res) {
 });
 //---------------------------------------------
 app.post("/signin", (req, res) => {
-  
   var email = req.body.email;
   var password = req.body.password;
-  
-  UserScema.find({ email: email ,password:password })
+
+  UserScema.find({ email: email, password: password })
     .then((result) => {
-     
-      console.log(result[0].password);
-      res.status(202).send(true);
-   
-        
+      console.log(result[0].name);
+      res.status(202).send(result[0].name);
+
       // console.log(result);
     })
     .catch((err) => {
@@ -86,4 +83,16 @@ app.post("/signin", (req, res) => {
 });
 app.listen(port, function () {
   console.log(`listening on port ${port}!`);
+});
+
+app.get("/api/users/:email", function (req, res) {
+  var search = req.params.email;
+  console.log(search);
+  UserScema.find({ email: search }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    }
+    res.send(docs);
+    console.log("done", docs);
+  });
 });
