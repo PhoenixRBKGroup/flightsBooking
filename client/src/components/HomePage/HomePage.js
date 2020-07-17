@@ -125,33 +125,43 @@ class HomePage extends React.Component {
         });
       })
       .then(() => {
-        var data = [];
-        for (var i = 0; i < this.state.dataTicket.Quotes.length; i++) {
-          data.push({
-            cost: this.state.dataTicket.Quotes[i].MinPrice,
-            Carrier: this.state.dataTicket.Quotes[i].OutboundLeg.CarrierIds[0],
-            DepartureDate: this.state.dataTicket.Quotes[i].QuoteDateTime,
+        if (this.state.dataTicket.length === 0) {
+          this.setState({
+            trip: "There are no flights available on this date",
           });
-        }
-        for (var k = 0; k < data.length; k++) {
-          for (var j = 0; j < this.state.dataTicket.Carriers.length; j++) {
-            if (
-              this.state.dataTicket.Carriers[j].CarrierId === data[k].Carrier
-            ) {
-              console.log(data[k].Carrier);
-              data[k].Carrier = this.state.dataTicket.Carriers[j].Name;
+        } else {
+          this.setState({
+            trip: "",
+          });
+          var data = [];
+          for (var i = 0; i < this.state.dataTicket.Quotes.length; i++) {
+            data.push({
+              cost: this.state.dataTicket.Quotes[i].MinPrice,
+              Carrier: this.state.dataTicket.Quotes[i].OutboundLeg
+                .CarrierIds[0],
+              DepartureDate: this.state.dataTicket.Quotes[i].QuoteDateTime,
+            });
+          }
+          for (var k = 0; k < data.length; k++) {
+            for (var j = 0; j < this.state.dataTicket.Carriers.length; j++) {
+              if (
+                this.state.dataTicket.Carriers[j].CarrierId === data[k].Carrier
+              ) {
+                console.log(data[k].Carrier);
+                data[k].Carrier = this.state.dataTicket.Carriers[j].Name;
+              }
             }
           }
+
+          for (var l = 0; l < data.length; l++) {
+            data[l].DepartureDate = data[l].DepartureDate.split("T");
+          }
+          this.setState({ dataRn: data });
+
+          console.log(this.state.dataRn);
+
+          // console.log(this.state.dataTicket);
         }
-
-        for (var l = 0; l < data.length; l++) {
-          data[l].DepartureDate = data[l].DepartureDate.split("T");
-        }
-        this.setState({ dataRn: data });
-
-        console.log(this.state.dataRn);
-
-        // console.log(this.state.dataTicket);
       })
       .catch((error) => {
         console.log(error);
@@ -159,15 +169,6 @@ class HomePage extends React.Component {
           trip: "There are no flights available on this date",
         });
       });
-    if (this.state.dataRn.length === 0) {
-      this.setState({
-        trip: "There are no flights available on this date",
-      });
-    } else {
-      this.setState({
-        trip: "",
-      });
-    }
   };
   //--------------------------------------------------------
 

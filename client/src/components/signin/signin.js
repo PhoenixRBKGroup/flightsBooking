@@ -9,6 +9,7 @@ class Signin extends Component {
     this.state = {
       email: "",
       password: "",
+      username: "",
       singip: "",
     };
   }
@@ -26,24 +27,38 @@ class Signin extends Component {
         password: this.state.password,
       })
       .then((result) => {
-          console.log("result   ",result);
-          this.setState({ singip: "sign in success " });
-          setTimeout(function () {
-            window.location.href = "/";
-          }, 2000);
+        console.log("result   ", result);
+        this.setState({ singip: "sign in success " });
+        setTimeout(function () {
+          window.location.href = "/";
+        }, 2000);
+      })
+      .then(() => {
+        this.finduser();
       })
       .catch((err) => {
-        console.log("hii");
         console.log("ERROR FROM AXIOS ", err);
         this.setState({ singip: "Woring Email or Password " });
-      
       });
   }
-
+  finduser() {
+    axios
+      .get("api/users", {
+        params: {
+          ID: this.state.email,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("ERROR FROM AXIOS ", err);
+      });
+  }
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar user={this.state.email} />
         <form className="login">
           <h1 className="header">LogIn</h1>
           <h2>{this.state.singip}</h2>

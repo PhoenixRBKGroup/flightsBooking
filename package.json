@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/test.js",
     "start": "node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
@@ -20,5 +20,10 @@
     "react-bootstrap": "^1.2.2",
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.0.1",
+    "request": "^2.88.2"
   }
 }
