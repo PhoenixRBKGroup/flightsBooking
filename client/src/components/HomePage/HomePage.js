@@ -184,7 +184,7 @@ class HomePage extends React.Component {
             <br />
             <label className="hours">{item.DepartureDate[1]}</label>
           </span>
-          <span id="price">
+          <span id="price" className="wholePrice">
             <label id="price"> price </label>
             <h1 className="pricem">{item.cost}</h1>
           </span>

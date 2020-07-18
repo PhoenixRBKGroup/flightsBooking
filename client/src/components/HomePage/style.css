@@ -68,23 +68,32 @@ body {
   margin: 0 auto 15px;
   padding: 45px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 30px;
+  color :#660000;
+  box-shadow: 7px 5px #888888;
 }
 .Carrier {
   position: relative;
   float: left;
   margin-top: -28px;
   margin-left: -28px;
+  font-size: 1.2em;
+  border-bottom:1px solid #660000;
+  margin-bottom:0;
 }
 #price {
   font-size: 30px;
   float: right;
   margin-top: -20px;
-  color: black;
+  color: #660000;
 }
+
 
 .pricem {
   align-items: center;
   margin-top: 20px;
   font-size: 30px;
   margin-left: 15px;
+  color:#660000;
 }
+
