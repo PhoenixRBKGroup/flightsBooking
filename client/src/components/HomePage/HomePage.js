@@ -220,7 +220,7 @@ class HomePage extends React.Component {
       <div>
         <Navbar />
         <div className="main">
-          <label>From</label>
+          <label>Depart</label>
           <input
             className="from input1"
             value={this.state.departure}
@@ -229,7 +229,7 @@ class HomePage extends React.Component {
             name="departure"
           />
           {this.renderSuggestions()}
-          <label>Depart</label>
+          <label>From</label>
 
           <input
             className="depart input1"
@@ -239,7 +239,7 @@ class HomePage extends React.Component {
             name="depDate"
           />
           <br></br>
-          <label>To</label>
+          <label>Return</label>
           <input
             className="to input1"
             value={this.state.arrival}
@@ -248,7 +248,7 @@ class HomePage extends React.Component {
             name="arrival"
           />
           {this.renderSuggestions2()}
-          <label>Return</label>
+          <label>To</label>
           <input
             className="return input1"
             type="date"
