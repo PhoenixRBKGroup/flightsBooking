@@ -12,8 +12,9 @@ class NavBar extends React.Component {
   render() {
     return (
       <header className="navbar">
-        <div className="logo">FlightBooking</div>
+        <div className="logo">FlightsBookings</div>
         <div className="navbar_item">
+    <a href="/"></a>
           <a href="/">Home </a>
         </div>
         <div className="navbar_item">
